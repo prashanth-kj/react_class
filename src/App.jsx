@@ -1,8 +1,11 @@
 
+import { useState } from 'react';
 import './App.css'
 import Card from './Card'
 function App() {
-     
+   
+     let [count,setCount]=useState(0); //Hooks it is a function
+
     let data=[
       {
           plan: "free",
@@ -68,7 +71,7 @@ function App() {
 
   }
     ]
-
+  
   return (
     <>
         <section className="pricing py-5">
@@ -79,8 +82,13 @@ function App() {
                
           })
         }
-       
-     
+    </div>
+
+    <div>
+         <button className='btn btn-success' onClick={()=>{
+             setCount(++count);
+         }}
+          > Click me number of {count} times </button>
     </div>
   </div>
 </section>
