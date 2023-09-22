@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 function Sidebar() {
   return (
     
@@ -18,9 +18,12 @@ function Sidebar() {
 
             {/* <!-- Nav Item - Dashboard --> */}
             <li className="nav-item active">
-                <a className="nav-link" href="javascript(void)">
-                    <i className="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                <div className="nav-link" >
+                    <Link to='dashboard'>
+                        <i className="fas fa-fw fa-tachometer-alt"></i>
+                        <span style={{color:"white"}}>Dashboard</span>
+                    </Link>
+                </div>
             </li>
 
             {/* <!-- Divider --> */}
@@ -33,21 +36,25 @@ function Sidebar() {
 
             {/* <!-- Nav Item - Pages Collapse Menu --> */}
             <li className="nav-item">
-                <a className="nav-link collapsed" href="javascript(void)" data-toggle="collapse" data-target="#collapseTwo"
+                <div className="nav-link collapsed" href="javascript(void)" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i className="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
-                </a>
+                    <Link to='/create'>
+                        <i className="fas fa-fw fa-cog"></i>
+                        <span style={{color:"white"}}>Add User</span>
+                    </Link>
+                </div>
                 
             </li>
 
             {/* <!-- Nav Item - Utilities Collapse Menu --> */}
             <li className="nav-item">
-                <a className="nav-link collapsed" href="javascript" data-toggle="collapse" data-target="#collapseUtilities"
+                <div className="nav-link collapsed" href="javascript" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i className="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
-                </a>
+                    <Link>
+                        <i className="fas fa-fw fa-wrench"></i>
+                        <span style={{color:"white"}}>view User</span>
+                    </Link>
+                </div>
                 
             </li>
 
