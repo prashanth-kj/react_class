@@ -2,6 +2,7 @@ import React from 'react'
 import Tile from './Tile'
 import Table from 'react-bootstrap/Table'
 import Button  from 'react-bootstrap/Button'
+import { useNavigate } from 'react-router-dom'     //useNavigate is a hooks  used  inside function
 function Dashboard({data,setData}) {
        let dashboardData=[
         {
@@ -31,7 +32,8 @@ function Dashboard({data,setData}) {
         }
         
        ]
-     
+       
+       let navigate =useNavigate();
 
       let handleDelete =(index)=>{ 
               let newArray=[...data];  //deep copy method
@@ -88,7 +90,7 @@ function Dashboard({data,setData}) {
                                       <td>{e.mobile}</td>
                                       <td>{e.batch}</td>
                                       <td>
-                                          <Button variant="primary">Edit</Button>
+                                          <Button variant="primary"  onClick={()=> navigate(`/edit/${i}`)}>Edit</Button>
                                           &nbsp;
                                           &nbsp;
                                           <Button variant="danger" onClick={()=>handleDelete(i)}>Delete</Button>

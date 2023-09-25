@@ -4,8 +4,8 @@ import Dashboard from './components/Dashboard'
 import Sidebar from './components/Sidebar'
 import Create from './components/Create'
 import Edit from './components/Edit'
-import { BrowserRouter,Routes,Route } from 'react-router-dom' 
-import { useState } from 'react'
+import { BrowserRouter,Routes,Route, Navigate } from 'react-router-dom'   //Navigate is component use inside jsx 
+import { useState } from 'react'                                                
 function App() {
      
        let [data, setData]=useState([
@@ -33,7 +33,8 @@ function App() {
              <Routes>
                  <Route path='/dashboard'  element={<Dashboard  data={data} setData={setData}/>}/>
                  <Route path='/create'    element={<Create  data={data} setData={setData}/>}/>
-                 <Route path='/edit'   element={<Edit/>} />
+                 <Route path='/edit/:id'   element={<Edit data={data} setData={setData} />} />
+                 <Route path='*'  element={<Navigate to='/dashboard'/>}  />
              </Routes>
 
         </BrowserRouter>    
