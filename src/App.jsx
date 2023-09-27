@@ -6,6 +6,13 @@ import Create from './components/Create'
 import Edit from './components/Edit'
 import { BrowserRouter,Routes,Route, Navigate } from 'react-router-dom'   //Navigate is component use inside jsx 
 import { useState } from 'react'                                                
+import NestedExample from './components/Nested Example'
+import Accounts from './components/Nested Example/Accounts'
+import Products from './components/Nested Example/Products'
+import Receipts from './components/Nested Example/Receipts'
+import Staff from './components/Nested Example/Staff'
+import UseRef from './components/Hooks/UseRef'
+import UseReducer from './components/Hooks/UseReducer'
 function App() {
      
        let [data, setData]=useState([
@@ -34,7 +41,19 @@ function App() {
                  <Route path='/dashboard'  element={<Dashboard  data={data} setData={setData}/>}/>
                  <Route path='/create'    element={<Create  data={data} setData={setData}/>}/>
                  <Route path='/edit/:id'   element={<Edit data={data} setData={setData} />} />
+                 <Route  path='/nested-Example'  element={<NestedExample/>} >
+                        <Route path='accounts'   element={<Accounts/>}/>
+                        <Route path='products'   element={<Products/>} />
+                        <Route path='receipts'  element={<Receipts/>}/>
+                        <Route path='staff'   element={<Staff/>}/>    
+                 </Route>
+                 <Route path='/useRef' element={<UseRef/>}/>
+                 <Route path='/useReducer' element={<UseReducer/>}/>
+
+
+
                  <Route path='*'  element={<Navigate to='/dashboard'/>}  />
+                 
              </Routes>
 
         </BrowserRouter>    

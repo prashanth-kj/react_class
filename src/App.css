@@ -1,0 +1,15 @@
+.pageButton{
+    display: flex;
+     list-style: none;     
+}
+
+.pageButton li{
+       padding: 10px;
+       border: 1px solid black;
+       cursor: pointer;
+}
+.pageButton li.active{
+       background-color: blueviolet;
+       color: white;
+}
+
