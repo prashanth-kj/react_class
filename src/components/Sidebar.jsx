@@ -50,7 +50,7 @@ function Sidebar() {
             <li className="nav-item">
                 <div className="nav-link collapsed" href="javascript" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <Link to='nested-Example'>
+                    <Link to='/nested-Example'>
                         <i className="fas fa-fw fa-wrench"></i>
                         <span style={{color:"white"}}>NestedExample</span>
                     </Link>
@@ -69,14 +69,14 @@ function Sidebar() {
             <li className="nav-item">
                 <div className="nav-link collapsed" href="javascript" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <Link to='useRef'>
+                    <Link to='/useRef'>
                         <i className="fas fa-fw fa-wrench"></i>
                         <span style={{color:"white"}}>UseRef</span>
                     </Link>
                 </div>
                 <div className="nav-link collapsed" href="javascript" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <Link to='useReducer'>
+                    <Link to='/useReducer'>
                         <i className="fas fa-fw fa-wrench"></i>
                         <span style={{color:"white"}}>UseReducer</span>
                     </Link>
