@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { UserDataContext } from './Context/UserContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Create() {
-  let {data,setData}=useContext(UserDataContext);
+  let {API_URL}=useContext(UserDataContext);
     let navigate=useNavigate();
       
       const UserSchema=Yup.object().shape({
@@ -22,6 +24,19 @@ function Create() {
       })
         
   
+   let handleAddUser=async(value)=>{
+            
+       let res= await axios.post(API_URL,value);
+         if(res.status===201){
+               navigate('/dashboard')
+         }
+         else{
+             toast.error("error occured")
+         }
+   }
+
+
+      
   return (
         <>
            <div className='container-fluid'>
@@ -36,17 +51,13 @@ function Create() {
                       userName:"",
                       email:"",
                       mobile:"",
-                      batch:""
+                      batch:"",
+                      password:""
                   }}
                    validationSchema={UserSchema}
-                   onSubmit={(value)=>{
-                    console.log(value);
-                    let newArray =[...data]
-                    newArray.push(value)
-                     
-                    setData(newArray);   
-                    navigate('/dashboard')
-                      }}
+                   onSubmit={(value)=>
+                       handleAddUser(value)
+                  }
                  >
                   
                   {({errors,touched, handleChange, handleBlur, handleSubmit})=>(
@@ -60,7 +71,7 @@ function Create() {
     
                       <Form.Group className="mb-3">
                         <Form.Label>User Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter UserName"  name='userName' onChange={handleChange} onBlur={handleBlur}/> 
+                        <Form.Control type="text" placeholder="Enter UserName"  name='userName' autoComplete='off' onChange={handleChange} onBlur={handleBlur}/> 
                        {errors.userName && touched.userName ? <div style={{color:"red"}}>{errors.userName}</div>:null}
                       </Form.Group>
     
@@ -68,6 +79,12 @@ function Create() {
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" name='email' onChange={handleChange} onBlur={handleBlur}/> 
                        {errors.email && touched.email ? <div style={{color:"red"}}>{errors.email}</div>:null}
+                      </Form.Group>
+                     
+                       <Form.Group className="mb-3">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Enter password" name='password' autoComplete='off' onChange={handleChange} onBlur={handleBlur}/> 
+                       {errors.password && touched.password ? <div style={{color:"red"}}>{errors.password}</div>:null}
                       </Form.Group>
     
                       <Form.Group className="mb-3">

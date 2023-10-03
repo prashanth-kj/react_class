@@ -52,7 +52,7 @@ function App() {
                  </Route>
                  <Route path='/useRef' element={<><Sidebar/><UseRef/></>}/>
                  <Route path='/useReducer' element={<><Sidebar/> <UseReducer/></>}/>
-                 <Route path='/'  element={<Home/>}/>
+                 <Route path='/'  element={<UserContext><Home/></UserContext>}/>
 
 
                  <Route path='*'  element={<Navigate to='/dashboard'/>}  />

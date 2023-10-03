@@ -7,19 +7,22 @@ import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { UserDataContext } from './Context/UserContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Edit() {
   let navigate = useNavigate();
   const params = useParams();
    
-    let {data,setData}=useContext(UserDataContext)
+    let {API_URL}=useContext(UserDataContext)
 
    let [initialValues,setInitialValues]=useState({
          name:"",
          userName:"",
          email:"",
          mobile:"",
-         batch:""
+         batch:"",
+         password:""
    })
   const UserSchema = Yup.object().shape({
     name: Yup.string().required('* Required'),
@@ -29,21 +32,36 @@ function Edit() {
     batch: Yup.string().required('* Required')
   });
 
-     const getData=(index)=>{
-             
-         let newValues={...initialValues};
-             newValues.name=data[index].name;
-             newValues.userName=data[index].userName;
-             newValues.email=data[index].email;
-             newValues.mobile=data[index].mobile;
-             newValues.batch=data[index].batch;
-             console.log(newValues);
-             setInitialValues(newValues);
+     const getData=async(id)=>{
+           
+      try {
+        let res= await axios.get(`${API_URL}/${id}`);
+        if(res.status===200){
+            setInitialValues(res.data)
+        }
+      } catch (error) {
+          toast.error("error ocuured")
+      }
+        
             
+     }
+
+
+     let handleEditUser=async(values)=>{
+              try {
+
+                let res= await axios.put(`${API_URL}/${params.id}`,values);
+                if(res.status===200){
+                      navigate('/dashboard')
+                }
+                
+              } catch (error) {
+                  toast.error("error occured")
+              }
      }
         
   useEffect(()=>{
-      if(Number(params.id)< data.length){
+      if(Number(params.id)){
           getData(Number(params.id))
       } 
         
@@ -61,17 +79,13 @@ function Edit() {
             initialValues={initialValues}
             validationSchema={UserSchema}
             enableReinitialize ={true}
-            onSubmit={(values) => {
-              console.log(values);
-              let newArray = [...data];
-              newArray.splice(Number(params.id),1,values) 
-              setData(newArray);
-              navigate('/dashboard');
+            onSubmit={(value) => {
+                handleEditUser(value)
             }}
           >
             {({values,errors, touched, handleChange, handleBlur, handleSubmit}) => (
               <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3" controlId="formBasicname">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     type="text"
@@ -109,6 +123,12 @@ function Edit() {
                   />
                   {errors.email && touched.email ? <div style={{ color: "red" }}>{errors.email}</div> : null}
                 </Form.Group>
+                  
+                <Form.Group className="mb-3">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password"   value={values.password} placeholder="Enter password" name='password' autoComplete='off' onChange={handleChange} onBlur={handleBlur}/> 
+                       {errors.password && touched.password ? <div style={{color:"red"}}>{errors.password}</div>:null}
+                      </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicMobile">
                   <Form.Label>Mobile</Form.Label>

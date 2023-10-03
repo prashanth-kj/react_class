@@ -1,25 +1,54 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Tile from './Tile'
 import Table from 'react-bootstrap/Table'
 import Button  from 'react-bootstrap/Button'
-import { useNavigate } from 'react-router-dom'     //useNavigate is a hooks  used  inside function
+import {useNavigate } from 'react-router-dom'     //useNavigate is a hooks  used  inside function
 import { UserDataContext } from './Context/UserContext'
 import { DashboardDataContext } from './Context/DashboardContext'
 import UseLogout from './Hooks/UseLogout' //this is custom hooks
+import { toast } from 'react-toastify';
+import axios from 'axios'
 function Dashboard() {
       
-       let {data,setData}=useContext(UserDataContext);
+       let [data,setData]=useState([])
+       let {API_URL}=useContext(UserDataContext);
        let {dashboardData}=useContext(DashboardDataContext)
 
        let navigate =useNavigate();
        let logout=UseLogout();
 
-      let handleDelete =(index)=>{ 
-              let newArray=[...data];  //deep copy method
-                  newArray.splice(index,1);
-                  setData(newArray);
-      }
+      let handleDelete =async(id,index)=>{ 
+           let newArray=[...data];
+               newArray.splice(index,1)
+                setData(newArray)
 
+          try {
+                let res= await axios.delete(`${API_URL}/${id}`)
+                   if(res.status===200){
+                       getData()
+                   }
+               
+          } catch (error) {
+             toast.error("error occured")
+          }  
+        
+      }
+ 
+       let getData= async()=>{
+             try {
+                  let res=await axios.get(API_URL);
+                //   toast.success("data fetched");
+                  setData(res.data)
+
+             } catch (error) {
+                 toast.error("error on fetching data")
+                 console.log(error);
+             }
+       }
+ 
+    useEffect(()=>{
+          getData()
+    },[])
   return (
     <>
     <div className="container-fluid">
@@ -68,10 +97,10 @@ function Dashboard() {
                                       <td>{e.mobile}</td>
                                       <td>{e.batch}</td>
                                       <td>
-                                          <Button variant="primary"  onClick={()=> navigate(`/edit/${i}`)}>Edit</Button>
+                                          <Button variant="primary"  onClick={()=> navigate(`/edit/${e.id}`)}>Edit</Button>
                                           &nbsp;
                                           &nbsp;
-                                          <Button variant="danger" onClick={()=>handleDelete(i)}>Delete</Button>
+                                          <Button variant="danger" onClick={()=>handleDelete(e.id,i)}>Delete</Button>
                                       </td>
                                 </tr>
                             })
